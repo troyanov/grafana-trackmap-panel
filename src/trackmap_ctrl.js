@@ -64,6 +64,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.coords = [];
     this.leafMap = null;
     this.polyline = null;
+    this.circles = [];
     this.hoverMarker = null;
     this.hoverTarget = null;
     this.setSizePromise = null;
@@ -207,6 +208,10 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       if (this.polyline) {
         this.polyline.removeFrom(this.leafMap);
       }
+      if (this.circles.length > 0) {
+        this.circles.forEach((c)=>{c.removeFrom(this.leafMap)})
+      }
+
       this.onPanelClear();
       return;
     }
@@ -287,6 +292,12 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
         weight: 3,
       }
     ).addTo(this.leafMap);
+
+    this.coords.forEach((x) => {
+        let c = L.circle(x.position,{radius: 3, color: this.panel.pointColor, fill: true});
+        this.circles.push(c);
+        c.addTo(this.leafMap);
+    })
 
     this.zoomToFit();
   }
