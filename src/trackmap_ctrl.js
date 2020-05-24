@@ -1,5 +1,6 @@
 import L from './leaflet/leaflet.js';
 import moment from 'moment';
+import './leaflet/leaflet-tilelayer-colorfilter.js';
 
 import appEvents from 'app/core/app_events';
 import {MetricsPanelCtrl} from 'app/plugins/sdk';
@@ -11,7 +12,7 @@ const panelDefaults = {
   maxDataPoints: 500,
   autoZoom: true,
   scrollWheelZoom: false,
-  defaultLayer: 'OpenStreetMap',
+  defaultLayer: 'OpenStreetMap.Grayscale',
   lineColor: 'red',
   pointColor: 'royalblue',
 }
@@ -29,8 +30,17 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     _.defaults(this.panel, panelDefaults);
 
+    let gsFilter = [
+        'grayscale:100%',
+    ];
+
     // Save layers globally in order to use them in options
     this.layers = {
+      'OpenStreetMap.Grayscale': L.tileLayer.colorFilter('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 19,
+        filter: gsFilter
+      }),
       'OpenStreetMap': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         maxZoom: 19

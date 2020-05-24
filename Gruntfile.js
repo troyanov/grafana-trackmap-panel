@@ -37,7 +37,13 @@ module.exports = (grunt) => {
         expand: true,
         src: '*',
         dest: 'dist/leaflet/images/'
-      }
+      },
+      leaflet_colorfilter: {
+        cwd: 'node_modules/leaflet.tilelayer.colorfilter/src/',
+        expand: true,
+        src: ['leaflet-tilelayer-colorfilter.js'],
+        dest: 'dist/leaflet/'
+      },
     },
 
     watch: {

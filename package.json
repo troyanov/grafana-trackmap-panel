@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "leaflet": "^1.5.1",
+    "leaflet.tilelayer.colorfilter": "^1.2.5",
     "moment": "^2.22.2"
   }
 }
